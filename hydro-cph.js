@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         Hydro-cph
-// @namespace    http://tampermonkey.net/LYuckl/Hydro-cph
-// @version      0.1
+// @namespace    https://github.com/LYkcul/HydroCPH
+// @version      1.0.0
 // @description  Hydro题目传送至cph
-// @author       LYuckl
+// @author       LYkcul
 // @match        *://*/*
 // @license      AGPL-3.0 license
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
     var url = window.location.href;
 
@@ -33,7 +33,7 @@
             method: "POST",
             data: JSON.stringify({
                 batch: {
-                    id: "exlg",
+                    id: "hydroCPH",
                     size: 1
                 },
                 name: `Hydro_${pid}`,
@@ -84,13 +84,17 @@
         //console.log(pos.textContent);
         pos.appendChild(cphL);
 
-        cphL.addEventListener('click', async function() {
+        cphL.addEventListener('click', async function () {
             await cph();
         });
     }
 
-    if (url.includes('/p/') && !url.includes('submit') && !url.includes('discuss') && !url.includes('solution') && !url.includes('files') && !url.includes('edit') && !url.includes('config')) {
-        window.addEventListener('load', HydroCPH);
+    const pageInfo = document.querySelector('html');
+    if (pageInfo) {
+        const dataApp = pageInfo.getAttribute('data-app');
+        const dataPage = pageInfo.getAttribute('data-page');
+        if (dataApp && dataPage && dataApp === "Hydro" && (dataPage === "problem_detail" || dataPage.includes("detail_problem"))) {
+            window.addEventListener('load', HydroCPH);
+        }
     }
-
 })();
