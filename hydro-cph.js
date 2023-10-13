@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Hydro-cph
 // @namespace    https://github.com/LYkcul/HydroCPH
-// @version      1.0.0
+// @version      1.0.1
 // @description  Hydro题目传送至cph
 // @author       LYkcul
 // @match        *://*/*
