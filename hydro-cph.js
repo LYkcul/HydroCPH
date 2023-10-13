@@ -58,10 +58,10 @@
                 testType: "single"
             }),
             onload(f) {
-                f.status === 502 && alert('cph 未启动')
+                f.status === 502 && alert('cph 传送失败')
             },
             onerror() {
-                alert('cph 未启动')
+                alert('cph 传送失败')
             }
         })
     }
@@ -89,11 +89,20 @@
         });
     }
 
+    function checkUiContext() {
+        const allScript = document.querySelectorAll('script');
+        for (const node of allScript) {
+            if (node.textContent.includes('UiContext')) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     const pageInfo = document.querySelector('html');
     if (pageInfo) {
-        const dataApp = pageInfo.getAttribute('data-app');
         const dataPage = pageInfo.getAttribute('data-page');
-        if (dataApp && dataPage && dataApp === "Hydro" && (dataPage === "problem_detail" || dataPage.includes("detail_problem"))) {
+        if (dataPage && checkUiContext() && (dataPage === "problem_detail" || dataPage.includes("detail_problem"))) {
             window.addEventListener('load', HydroCPH);
         }
     }
